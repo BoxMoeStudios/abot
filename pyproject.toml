@@ -15,7 +15,7 @@ nonebot-plugin-test = "^0.3.0"
 
 [nonebot.plugins]
 plugins = ["nonebot_plugin_test"]
-plugin_dirs = ["abot/plugins"]
+plugin_dirs = ["plugins"]
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
