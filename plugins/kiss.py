@@ -74,6 +74,9 @@ async def _(bot: Bot, event: GroupMessageEvent):
     if to == 0:
         await rua.finish('讨厌，不让你亲~', at_sender=True)
 
+    if to == uin:
+        await rua.finish('现在就要亲自己，不敢想待会儿会干啥', at_sender=True)
+
     try:
         frm_im = await aget_av(uin)
         to_im = await aget_av(to)
