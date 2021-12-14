@@ -18,3 +18,6 @@ async def _(bot: Bot, event: Event, state: T_State):
         await admin.finish(f'超管<{event.get_user_id()}>已退出')
 
     await admin.send(f'获取操作: {op}')
+    del state['op']
+
+    

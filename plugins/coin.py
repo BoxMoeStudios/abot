@@ -1,9 +1,10 @@
 from nonebot import CommandGroup, export
-from nonebot.adapters import Bot, Event
-from nonebot.adapters.cqhttp import MessageSegment, GroupMessageEvent
+from nonebot.adapters import Bot
+from nonebot.adapters.cqhttp import MessageSegment, GroupMessageEvent, GROUP_ADMIN
 from abot.setup import export_plugin
 from abot.store import StoreClient, seconds_till_tomorrow
 from abot.message import get_at
+from abot.permission import GROUP_NO_ANONYMOUS
 from random import randint
 
 store = StoreClient()
@@ -16,16 +17,13 @@ __plugin_usage__ = '''【金币】
 
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
-coin = CommandGroup(__plugin__name__)
+coin = CommandGroup(__plugin__name__, permission=GROUP_NO_ANONYMOUS)
 me = coin.command('me', aliases={'$me', '$ me'})
 send = coin.command('send', aliases={'$send', '$ send'})
 get = coin.command('get', aliases={'$get', '$ get'})
 
 @me.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    if event.anonymous:
-        await get.finish('匿名状态下不能进行此操作哦~')
-        
     a = store.get_coin(event.user_id)
     await me.finish(f'你有 {a} 个金币', at_sender=True)
 
@@ -34,9 +32,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
 async def _(bot: Bot, event: GroupMessageEvent):
     to = get_at(event)
     uin = event.user_id
-
-    if event.anonymous:
-        await get.finish('匿名状态下不能进行此操作哦~')
 
     if to == 0:
         await send.finish('谢谢老板~', at_sender=True)
@@ -63,9 +58,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
 @get.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     uin = event.user_id
-
-    if event.anonymous:
-        await get.finish('匿名状态下不能领金币哦~')
 
     a = store.geti(f'bot:coin:today:{uin}')
     if a:
