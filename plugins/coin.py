@@ -33,6 +33,9 @@ async def _(bot: Bot, event: Event):
     to = get_at(event)
     uin = int(event.get_user_id())
 
+    if to == 0:
+        await send.finish('谢谢老板~', at_sender=True)
+
     if to == uin:
         await send.finish('你赠送自己干嘛？', at_sender=True)
 

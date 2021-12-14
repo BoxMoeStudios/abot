@@ -6,6 +6,7 @@ from io import BytesIO
 from abot.setup import export_plugin
 from abot.message import get_at
 from abot.qq import aget_av
+from random import choice
 
 
 __plugin__name__ = '摸一摸'
@@ -17,13 +18,16 @@ export_plugin(export(), __plugin__name__, __plugin_usage__)
 
 rua = on_command(__plugin__name__, aliases={'rua'})
 
+refuse_words = ['讨厌，不让你摸~', '不要艾特我了啦~', '不准摸我']
+
+
 @rua.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     to = get_at(event)
 
     # if abot has been ated
     if to == 0:
-        await rua.finish('讨厌，不让你摸~', at_sender=True)
+        await rua.finish(choice(refuse_words), at_sender=True)
 
     try:
         av = await aget_av(to)

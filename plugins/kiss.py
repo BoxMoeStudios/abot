@@ -6,6 +6,7 @@ from io import BytesIO
 from abot.setup import export_plugin
 from abot.message import get_at
 from abot.qq import aget_av
+from random import choice
 
 
 __plugin__name__ = '亲亲'
@@ -65,6 +66,10 @@ async def kiss(frm: Image, to: Image, fps=25) -> BytesIO:
                    save_all=True, duration=fps, loop=0)
     return buf
 
+
+refuse_words = ['讨厌，不让你亲~', '不要艾特我了啦~', '不准亲我']
+
+
 @rua.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
     to = get_at(event)
@@ -72,7 +77,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
 
     # if abot has been ated
     if to == 0:
-        await rua.finish('讨厌，不让你亲~', at_sender=True)
+        await rua.finish(choice(refuse_words), at_sender=True)
 
     if to == uin:
         await rua.finish('现在就要亲自己，不敢想待会儿会干啥', at_sender=True)
