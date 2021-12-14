@@ -1,11 +1,37 @@
 from typing import Tuple
-from nonebot import on_command
+from nonebot import on_command, export
 from nonebot.log import logger
 from nonebot.adapters import Bot, Event
 from hashlib import md5
+from abot.setup import export_plugin
 import random
 import httpx
 import re
+
+_langs = {
+    '中文': 'zh', '英语': 'en',
+    '粤语': 'yue', '文言文': 'wyw', '日语': 'jp',
+    '韩语': 'kor', '法语': 'fra', '西班牙语': 'spa',
+    '泰语': 'th', '阿拉伯语': 'ara', '俄语': 'ru',
+    '葡萄牙语': 'pt', '德语': 'de', '意大利语': 'it',
+    '希腊语': 'el', '荷兰语': 'nl', '波兰语': 'pl',
+    '保加利亚语': 'bul', '爱沙尼亚语': 'est', '丹麦语': 'dan',
+    '芬兰语': 'fin', '捷克语': 'cs', '罗马尼亚语': 'rom',
+    '斯洛文尼亚语': 'slo', '瑞典语': 'swe', '匈牙利语': 'hu',
+    '繁体中文': 'cht', '越南语': 'vie'
+}
+
+__plugin_name__ = '翻译'
+__plugin_usage__ = '''【翻译】
+指定语言翻译:
+/翻译.语言 内容
+/fy.语言 内容
+
+中英互译:
+/翻译 内容
+/fy 内容'''
+
+export_plugin(export(), __plugin_name__, __plugin_usage__)
 
 _appid = '20211211001024950'
 _appkey = 'RJgY2Kk5HeBIoAZCXARw'
@@ -27,18 +53,7 @@ async def fetch(query: str, lang: str):
     return result.json()
 
 
-_langs = {
-    '中文': 'zh', '英语': 'en',
-    '粤语': 'yue', '文言文': 'wyw', '日语': 'jp',
-    '韩语': 'kor', '法语': 'fra', '西班牙语': 'spa',
-    '泰语': 'th', '阿拉伯语': 'ara', '俄语': 'ru',
-    '葡萄牙语': 'pt', '德语': 'de', '意大利语': 'it',
-    '希腊语': 'el', '荷兰语': 'nl', '波兰语': 'pl',
-    '保加利亚语': 'bul', '爱沙尼亚语': 'est', '丹麦语': 'dan',
-    '芬兰语': 'fin', '捷克语': 'cs', '罗马尼亚语': 'rom',
-    '斯洛文尼亚语': 'slo', '瑞典语': 'swe', '匈牙利语': 'hu',
-    '繁体中文': 'cht', '越南语': 'vie'
-}
+
 
 
 translate = on_command('fy', aliases={'翻译'})

@@ -1,10 +1,18 @@
-from nonebot import on_command
+from nonebot import on_command, export
 from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import MessageSegment
 from httpx import AsyncClient
 from datetime import date
 from random import choice
+from abot.setup import export_plugin
 import re
+
+__plugin_name__ = 'today'
+__plugin_usage__ = '''【历史上的今天】
+/today
+/今天'''
+
+export_plugin(export(), __plugin_name__, __plugin_usage__)
 
 _url = 'https://baike.baidu.com/cms/home/eventsOnHistory/%s.json'
 

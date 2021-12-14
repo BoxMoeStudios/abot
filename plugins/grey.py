@@ -1,11 +1,20 @@
-from nonebot import on_command
+from nonebot import on_command, export
 from nonebot.log import logger
 from nonebot.adapters.cqhttp import MessageEvent, MessageSegment
 from nonebot.adapters import Bot
 from PIL import Image
-from base64 import b64encode
 from httpx import AsyncClient
 from io import BytesIO
+from abot.setup import export_plugin
+
+__plugin_name__ = '灰头像'
+__plugin_usage__ = '''【获取灰头像】
+/grey
+/gray
+/灰头像'''
+
+export_plugin(export(), __plugin_name__, __plugin_usage__)
+
 
 _url = 'https://q2.qlogo.cn/headimg_dl?dst_uin=%s&spec=100'
 

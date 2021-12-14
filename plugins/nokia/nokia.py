@@ -1,4 +1,3 @@
-import base64
 from io import BytesIO
 from os.path import dirname
 from collections import deque
@@ -14,24 +13,10 @@ line_rotate = -9.8
 max_line_width = 680
 max_content_height = 450
 font = ImageFont.truetype(dirname(__file__) + "/assets/font.ttf", font_size)
+model = Image.open(dirname(__file__) + "/assets/img.png")
 
 
-def image_to_byte_array(image: Image):
-    imgByteArr = BytesIO()
-    image.save(imgByteArr, format=image.format)
-    imgByteArr = imgByteArr.getvalue()
-    return imgByteArr
-
-
-def im_2_b64(pic: Image.Image) -> str:
-    buf = BytesIO()
-    pic.save(buf, format="PNG")
-    base64_str = base64.b64encode(buf.getbuffer()).decode()
-    return "base64://" + base64_str
-
-
-def draw_subtitle(im, text: str):
-
+def draw_subtitle(im: Image, text: str):
     width, height = font.getsize(text)
     image2 = Image.new("RGBA", (width, height))
     draw2 = ImageDraw.Draw(image2)
@@ -43,8 +28,8 @@ def draw_subtitle(im, text: str):
     im.paste(image2, (px, py, px + sx, py + sy), image2)
 
 
-def generate_image(text: str):
-    origin_im = Image.open(dirname(__file__) + "/assets/img.png")
+def generate_image(text: str) -> BytesIO:
+    origin_im = model.copy()
     text = text[:900]
     length = len(text)
     width, height = font.getsize(text)
@@ -64,6 +49,7 @@ def generate_image(text: str):
             line = ""
         else:
             line += word
+    
     lines.append(line)
     image2 = Image.new("RGBA", (max_line_width, max_content_height))
     draw2 = ImageDraw.Draw(image2)
@@ -78,4 +64,7 @@ def generate_image(text: str):
     sx, sy = image2.size
     origin_im.paste(image2, (px, py, px + sx, py + sy), image2)
     draw_subtitle(origin_im, f"{length}/900")
-    return im_2_b64(origin_im)
+
+    buf = BytesIO()
+    origin_im.save(buf, format="PNG")
+    return buf
