@@ -27,8 +27,8 @@ async def _(bot: Bot, event: Event, state: dict):
 
     names = '\n· '.join(plugins.keys())
 
-    await help.finish('现在支持的功能有: \n\n· '+ names +\
-        '\n\n发送 "/help 功能" 可查看功能的具体使用方法。'
+    await help.finish('现在支持的功能有: \n· '+ names +\
+        '\n发送 "/help 功能" 可查看功能的具体使用方法。'
     )
 
 @help.got('name', prompt='你要查看那个功能的使用方法呢？')

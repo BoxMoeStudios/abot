@@ -18,9 +18,9 @@ __plugin_usage__ = '''【金币】
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
 coin = CommandGroup(__plugin__name__, permission=GROUP_NO_ANONYMOUS)
-me = coin.command('me', aliases={'$me', '$ me'})
-send = coin.command('send', aliases={'$send', '$ send'})
-get = coin.command('get', aliases={'$get', '$ get'})
+me = coin.command('me', aliases={'$me'})
+send = coin.command('send', aliases={'$send'})
+get = coin.command('get', aliases={'$get'})
 
 @me.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
@@ -33,16 +33,16 @@ async def _(bot: Bot, event: GroupMessageEvent):
     to = get_at(event)
     uin = event.user_id
 
-    if to == 0:
-        await send.finish('谢谢老板~', at_sender=True)
-
-    if to == uin:
-        await send.finish('你赠送自己干嘛？', at_sender=True)
-
     cost = event.get_plaintext().strip()
     cost = int(cost) if cost.isdigit() else 0
 
     if cost:
+        if to == 0:
+            await send.finish('谢谢老板~', at_sender=True)
+
+        if to == uin:
+            await send.finish('你赠送自己干嘛？', at_sender=True)
+
         a = store.get_coin(uin)
         if a >= cost:
             store.transfer_coin(uin, to, cost)

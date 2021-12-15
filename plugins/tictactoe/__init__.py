@@ -22,10 +22,10 @@ store = StoreClient()
 game = Game()
 
 group = CommandGroup('#', permission=GROUP_NO_ANONYMOUS)
-new = group.command('new', aliases={'#new'})
-ac = group.command('ac', aliases={'#ac'})
-go = group.command('go', aliases={'#go'})
-quit = group.command('quit', aliases={'#quit'})
+new = group.command('new', aliases={'#new', '# new'})
+ac = group.command('ac', aliases={'#ac', '# ac'})
+go = group.command('go', aliases={'#go', '# go'})
+quit = group.command('quit', aliases={'#quit', '# quit'})
 
 @new.handle()
 async def _(bot: Bot, event: GroupMessageEvent):

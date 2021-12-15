@@ -21,7 +21,7 @@ _langs = {
     '繁体中文': 'cht', '越南语': 'vie'
 }
 
-__plugin_name__ = '翻译'
+__plugin_name__ = 'translate'
 __plugin_usage__ = '''【翻译】
 指定语言翻译:
 /翻译.语言 内容

@@ -22,6 +22,7 @@ class Channel:
 
     def check(self):
         if self.cd > 0:
+            self.cd -= 1
             return False
 
         self.lock.acquire()
@@ -35,6 +36,11 @@ class Channel:
         for i in range(0, n-1):
             if s[i] != s[i+1]:
                 return False
+
+        # 重置复读 CD
+        self.lock.acquire()
+        self.cd = randint(5, 15)
+        self.lock.release()
         return True
 
     def clear(self):
@@ -61,7 +67,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         channels[gid].clear()
         await repeat.finish(msg)
 
-__plugin_name__ = '复读'
+__plugin_name__ = 'repeat'
 __plugin_usage__ = '''
 /开始复读
 /停止复读'''

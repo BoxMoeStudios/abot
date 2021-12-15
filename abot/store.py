@@ -30,6 +30,7 @@ class StoreClient:
     def geti(cls, key: str) -> int:
         b = cls.c.get(key)
         return int(b) if b else 0
+        
 
     def seti(cls, key: str, value: int, ex: int) -> int:
         return cls.c.set(key, value, ex=ex)

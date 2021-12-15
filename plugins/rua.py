@@ -9,7 +9,7 @@ from abot.qq import aget_av
 from random import choice
 
 
-__plugin__name__ = '摸一摸'
+__plugin__name__ = 'rua'
 __plugin_usage__ = '''【摸一摸】
 /摸一摸 @谁
 /rua @谁'''

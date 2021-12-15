@@ -8,7 +8,7 @@ from io import BytesIO
 from abot.setup import export_plugin
 from abot.qq import aget_av
 
-__plugin_name__ = '灰头像'
+__plugin_name__ = 'grey'
 __plugin_usage__ = '''【获取灰头像】
 /grey
 /gray
