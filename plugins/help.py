@@ -9,8 +9,6 @@ def load_plugin_info():
         name = plugin.export.get('name')
         if name:
             plugins[name] = plugin.export
-
-    print(plugins)
     
 
 help = on_command('help', aliases={'帮助', '菜单', 'menu'})
@@ -25,11 +23,12 @@ async def _(bot: Bot, event: Event, state: dict):
         state['name'] = arg
         return
 
-    names = '\n· '.join(plugins.keys())
+    names = ', '.join(plugins.keys())
 
-    await help.finish('现在支持的功能有: \n· '+ names +\
-        '\n发送 "/help 功能" 可查看功能的具体使用方法。'
-    )
+    print(names)
+
+    await help.send('现在支持的功能有: '+ names)
+    await help.finish('发送 "/help 功能" 可查看功能的具体使用方法。')
 
 @help.got('name', prompt='你要查看那个功能的使用方法呢？')
 async def _(bot: Bot, event: Event, state: dict):

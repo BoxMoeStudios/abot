@@ -56,7 +56,7 @@ async def fetch(query: str, lang: str):
 
 
 
-translate = on_command('fy', aliases={'翻译'})
+translate = on_command(__plugin_name__, aliases={'翻译', 'fy'})
 
 @translate.handle()
 async def _(bot: Bot, event: Event):

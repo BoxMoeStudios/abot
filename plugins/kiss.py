@@ -16,7 +16,7 @@ __plugin_usage__ = '''【亲亲】
 
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
-rua = on_command(__plugin__name__, aliases={'kiss'})
+rua = on_command(__plugin__name__, aliases={'亲亲'})
 
 from_x = [92, 135, 84, 80, 155, 60, 50, 98, 35, 38, 70, 84, 75]
 from_y = [64, 40, 105, 110, 82, 96, 80, 55, 65, 100, 80, 65, 65]

@@ -6,7 +6,6 @@ from typing import Literal
 from PIL import ImageFont, Image, ImageDraw
 from math import sqrt
 from io import BytesIO
-import re
 
 def split_to_lines(s: str, size: int, font: ImageFont, max_width: float) -> str:
     lines = []

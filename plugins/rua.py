@@ -16,7 +16,7 @@ __plugin_usage__ = '''【摸一摸】
 
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
-rua = on_command(__plugin__name__, aliases={'rua'})
+rua = on_command(__plugin__name__, aliases={'摸一摸'})
 
 refuse_words = ['讨厌，不让你摸~', '不要艾特我了啦~', '不准摸我']
 

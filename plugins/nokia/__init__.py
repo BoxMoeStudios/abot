@@ -5,7 +5,7 @@ from abot.setup import export_plugin
 
 from .nokia import generate_image
 
-__plugin_name__ = '诺基亚表情包'
+__plugin_name__ = 'nokia'
 __plugin_usage__ = '''【诺基亚表情包】
 /nokia 内容
 /nka 内容
