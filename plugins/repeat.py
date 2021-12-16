@@ -59,8 +59,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
         return
 
     msg = event.raw_message
-    print(msg)
-
     channels[gid].add(msg)
 
     if channels[gid].check():
