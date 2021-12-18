@@ -1,3 +1,4 @@
+from os import stat
 from nonebot import on_command, export
 from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import GroupMessageEvent, MessageSegment
@@ -68,13 +69,22 @@ export_plugin(export(), __plugin__name__, __plugin_usage__)
 fan = on_command(__plugin__name__)
 
 @fan.handle()
-async def _(bot: Bot, event: GroupMessageEvent):
-    text = event.get_plaintext()
-    if len(text) > 10:
+async def _(bot: Bot, event: GroupMessageEvent, state: dict):
+    name = event.get_plaintext().strip()
+    if len(name) > 10:
         await fan.finish('名字太长了啦', at_sender=True)
+
+    if name:
+        state['name'] = name
 
     # if not re.match(r'([\u4e00-\u9fa5]|[a-zA-Z0-9])', text):
     #     await fan.finish('')
 
-    await fan.finish(MessageSegment.image(await make_image(text)))
+    
 
+@fan.got('name', prompt='你是谁的狂粉？')
+async def _(bot: Bot, event: GroupMessageEvent, state: dict):
+    name = state['name']
+    if len(name) > 10:
+        await fan.reject('名字太长了啦', at_sender=True)
+    await fan.finish(MessageSegment.image(await make_image(name)))

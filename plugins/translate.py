@@ -52,10 +52,6 @@ async def fetch(query: str, lang: str):
         result = await c.post(_url, params=payload, headers=_headers)
     return result.json()
 
-
-
-
-
 translate = on_command(__plugin_name__, aliases={'翻译', 'fy'})
 
 @translate.handle()

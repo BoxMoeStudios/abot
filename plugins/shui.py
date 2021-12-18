@@ -1,9 +1,8 @@
 from typing import Dict, List, Set
 from nonebot import on_message, export, CommandGroup
-from nonebot.adapters import Bot, Event
+from nonebot.adapters import Bot
 from nonebot.adapters.cqhttp import GROUP, GroupMessageEvent, MessageSegment
 from threading import RLock
-from PIL import Image
 from abot.setup import export_plugin
 from random import randint, choice
 import os
@@ -27,9 +26,6 @@ def load_prepared_messages():
 
 
 load_prepared_messages()
-
-print(text_list)
-print(image_paths)
 
 async def get_next_message(msg: str):
     if randint(0, 1) == 1:
@@ -57,14 +53,16 @@ class Channel:
 
     @staticmethod
     def get_cd() -> int:
-        return randint(10, 50)
+        return randint(5, 20)
 
     def has_permission(self, uin: int) -> bool:
         return uin in self.uin
 
 shui = on_message(permission=GROUP, block=False, priority=2)
 
-channels: Dict[int, Channel] = {}
+channels: Dict[int, Channel] = {
+    826653699: Channel(1366723936)
+}
 
 @shui.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
@@ -76,7 +74,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
 
     if channels[gid].check():
         await shui.finish(await get_next_message(msg))
-        # await shui.finish(msg)
 
 __plugin_name__ = 'shui'
 __plugin_usage__ = '''

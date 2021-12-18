@@ -1,6 +1,6 @@
-from nonebot import on_command
+from nonebot import on_command, on_notice
 from nonebot.adapters import Bot, Event
-from nonebot.adapters.cqhttp import MessageSegment
+from nonebot.adapters.cqhttp import MessageSegment, NoticeEvent
 from PIL import Image
 from io import BytesIO
 
@@ -12,4 +12,7 @@ nosese.save(nosese_buf, format='JPEG')
 @setu.handle()
 async def _(bot: Bot):
     await setu.finish(MessageSegment.image(nosese_buf), at_sender=True)
+
+
+
 
