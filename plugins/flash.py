@@ -17,10 +17,15 @@ export_plugin(export(), __plugin_name__, __plugin_usage__)
 
 __cost = 200
 
+block_list = { 826653699 }
+
 flash = on_command(__plugin_name__, aliases={'fsz'})
 
 @flash.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
+    if event.group_id in block_list:
+        await flash.finish('该群已关闭反闪照功能', at_sender=True)
+
     uin = event.user_id
     a = DefaultStore.get_coin(uin)
     if a < __cost:

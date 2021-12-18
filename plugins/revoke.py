@@ -78,7 +78,7 @@ export_plugin(export(), __plugin_name__, __plugin_usage__)
 
 anti = on_command(__plugin_name__, aliases={'fch', '反撤回'})
 
-__cost = 100000000
+__cost = 100
 
 @anti.handle()
 async def _(bot: Bot, event: GroupMessageEvent):

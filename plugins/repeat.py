@@ -56,7 +56,7 @@ channels: Dict[int, Channel] = {}
 async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     if gid not in channels: 
-        return
+        channels[gid] = Channel(2)
 
     msg = event.raw_message
     channels[gid].add(msg)
@@ -87,6 +87,6 @@ async def _(bot: Bot, event: GroupMessageEvent):
 async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     if gid in channels:
-        channels[event.group_id] = Channel(2)
+        del channels[event.group_id]
     
     await stop.finish('已关闭复读，发送 "/开始复读" 可再次打开复读模式')
