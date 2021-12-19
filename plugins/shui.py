@@ -53,7 +53,7 @@ class Channel:
 
     @staticmethod
     def get_cd() -> int:
-        return randint(5, 20)
+        return randint(20, 50)
 
     def has_permission(self, uin: int) -> bool:
         return uin in self.uin

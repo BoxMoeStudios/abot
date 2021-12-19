@@ -18,9 +18,9 @@ __plugin_usage__ = '''【金币】
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
 coin = CommandGroup(__plugin__name__, permission=GROUP_NO_ANONYMOUS)
-me = coin.command('me', aliases={'$me'})
-send = coin.command('send', aliases={'$send'})
-get = coin.command('get', aliases={'$get'})
+me = coin.command('me', aliases={'$me', '$ me'})
+send = coin.command('send', aliases={'$send', '$ send'})
+get = coin.command('get', aliases={'$get', '$ get'})
 
 @me.handle()
 async def _(bot: Bot, event: GroupMessageEvent):

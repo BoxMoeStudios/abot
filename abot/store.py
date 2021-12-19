@@ -31,9 +31,11 @@ class StoreClient:
         b = cls.c.get(key)
         return int(b) if b else 0
         
-
     def seti(cls, key: str, value: int, ex: int) -> int:
         return cls.c.set(key, value, ex=ex)
+
+    def client(cls) -> Redis:
+        return cls.c
 
 def seconds_till_tomorrow() -> int:
     now = datetime.now()
