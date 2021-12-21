@@ -1,6 +1,7 @@
 from nonebot import on_command
 from nonebot.permission import SUPERUSER
 from nonebot.adapters import Bot, Event
+from nonebot.adapters.cqhttp import MessageSegment, GroupMessageEvent
 from nonebot.typing import T_State
 
 admin = on_command('admin', permission=SUPERUSER)
@@ -20,4 +21,9 @@ async def _(bot: Bot, event: Event, state: T_State):
     await admin.send(f'获取操作: {op}')
     del state['op']
 
-    
+
+test = on_command('test', permission=SUPERUSER)
+
+@test.handle()
+async def _(bot: Bot, event: GroupMessageEvent):
+    await test.finish()

@@ -25,6 +25,6 @@ async def _(bot: Bot, event: PrivateMessageEvent):
     with store.client().pipeline() as pipe:
         pipe.incrby(f'bot:coin:{uin}', __coin)
         pipe.sadd(key, uin)
-        res = pipe.execute()
+        pipe.execute()
 
     await loss.finish(f'你领取了 {__coin} 个金币作为补偿')

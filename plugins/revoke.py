@@ -1,10 +1,12 @@
 from typing import Dict, List
 from nonebot import on_notice, on_message, on_command, export
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import GroupRecallNoticeEvent, GroupMessageEvent, GROUP
+from nonebot.adapters.cqhttp import GroupRecallNoticeEvent, GroupMessageEvent, GROUP, MessageSegment
 from abot.rule import GROUP_NOTICE_RECALL
 from abot.store import DefaultStore
 from abot.setup import export_plugin
+from abot.qq import get_image
+from abot.browser import get_ua
 from random import randint
 
 class Channel:
@@ -48,8 +50,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     if gid not in channels:
         channels[gid] = Channel()
-    
-    await channels[gid].add(event.message_id, event.raw_message)
+    await channels[gid].add(event.message_id, event.get_plaintext())
 
 
 notice = on_notice(
@@ -84,7 +85,7 @@ __cost = 100
 async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     if gid not in channels:
-        await notice.finish('当前还没有消息被撤回哦', at_sender=True)
+        await anti.finish('当前还没有消息被撤回哦', at_sender=True)
 
     uin = event.user_id
     a = DefaultStore.get_coin(uin)
@@ -94,9 +95,9 @@ async def _(bot: Bot, event: GroupMessageEvent):
     try:
         last_recalled = await channels[gid].last_recalled_message()
     except KeyError:
-        await notice.finish('反撤回失败，被撤回的消息太久远啦~', at_sender=True)
+        await anti.finish('反撤回失败，被撤回的消息太久远啦~', at_sender=True)
     
-    await notice.send(last_recalled)
+    await anti.send(last_recalled)
     DefaultStore.decr_coin(uin, __cost)
 
 

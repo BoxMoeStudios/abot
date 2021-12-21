@@ -66,6 +66,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         game.destroy(gid, uin)
     except ValueError as e:
         logger.error(f'#({gid}): {e}')
+        return
 
     if n >= 2:
         store.decr_coin(uin, 5)

@@ -11,9 +11,9 @@ store = StoreClient()
 
 __plugin__name__ = '$'
 __plugin_usage__ = '''【金币】
-查看金币: /$me
-获取金币: /$get
-赠送金币: /$send 数量 @谁'''
+查看金币: /$ me
+获取金币: /$ get
+赠送金币: /$ send 数量 @谁'''
 
 export_plugin(export(), __plugin__name__, __plugin_usage__)
 
