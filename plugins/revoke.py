@@ -1,7 +1,7 @@
 from typing import Dict, List
 from nonebot import on_notice, on_message, on_command, export
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import GroupRecallNoticeEvent, GroupMessageEvent, GROUP, MessageSegment
+from nonebot.adapters.cqhttp import GroupRecallNoticeEvent, GroupMessageEvent, GROUP, Message
 from abot.rule import GROUP_NOTICE_RECALL
 from abot.store import DefaultStore
 from abot.setup import export_plugin
@@ -12,11 +12,11 @@ from random import randint
 class Channel:
     def __init__(self, n = 100):
         self.n = n
-        self.queue: Dict[int, str]= {}
+        self.queue: Dict[int, Message]= {}
         self.recall_list: List[int] = []
 
-    async def add(self, mid: int, text: str):
-        self.queue[mid] = text
+    async def add(self, mid: int, msg: Message):
+        self.queue[mid] = msg
         if len(self.queue) > self.n:
             # persistent
             self.queue.clear()
@@ -27,7 +27,7 @@ class Channel:
             # persistent?
             self.recall_list = self.recall_list[1:]
 
-    async def last_recalled_message(self) -> str:
+    async def last_recalled_message(self) -> Message:
         mid = await self.pop_last_recall_id()
         if mid not in self.queue:
             raise KeyError('failed to find the last recalled message')
@@ -50,7 +50,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     if gid not in channels:
         channels[gid] = Channel()
-    await channels[gid].add(event.message_id, event.get_plaintext())
+    await channels[gid].add(event.message_id, event.message)
 
 
 notice = on_notice(

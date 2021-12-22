@@ -1,5 +1,5 @@
-from PIL import Image
 from nonebot.adapters import Event
+from nonebot.adapters.cqhttp import Message
 import re
 
 def get_at(ev: Event) -> int:
@@ -10,5 +10,21 @@ def get_at(ev: Event) -> int:
     return int(r.group(0))
 
 
-def get_image(ev: Event, flash_only=True) -> Image:
-    pass
+def compare_messages(a: Message, b: Message) -> bool:
+    if not a or not b:
+        return False
+
+    for s, t in zip(a, b):
+        if s.type != t.type:
+            return False
+
+        if s.type == 'image':
+            if t.type != 'image':
+                return False
+
+            return s.image == t.image
+        
+        if str(s) != str(t):
+            return False
+
+    return True
