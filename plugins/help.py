@@ -1,6 +1,7 @@
 from typing import Dict, List
 from nonebot import on_command, get_loaded_plugins
 from nonebot.adapters import Bot, Event
+from nonebot.adapters.cqhttp import Message, MessageSegment
 
 plugins: Dict[str, dict] = {}
 
@@ -27,8 +28,14 @@ async def _(bot: Bot, event: Event, state: dict):
 
     print(names)
 
-    await help.send('现在支持的功能有: '+ names)
-    await help.finish('发送 "/help 功能" 可查看功能的具体使用方法。')
+    msg = Message()
+    msg.append(MessageSegment.text('现在支持的功能有:\n'))
+    for name in plugins.keys():
+        msg.append(MessageSegment.text(name + '\n'))
+
+    msg.append(MessageSegment.text('发送 "/help 功能名" 可查看功能的具体使用方法。'))
+
+    await help.finish(msg)
 
 @help.got('name', prompt='你要查看那个功能的使用方法呢？')
 async def _(bot: Bot, event: Event, state: dict):
