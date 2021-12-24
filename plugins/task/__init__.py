@@ -1,7 +1,7 @@
-from typing import Dict, Union
+from typing import Dict
 from nonebot import export, require, get_bot, CommandGroup
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import GroupMessageEvent, Message, Bot as CQHTTPBot, message
+from nonebot.adapters.cqhttp import GroupMessageEvent, Message, Bot as CQHTTPBot
 from abot.setup import export_plugin
 from abot.permission import GROUP_NO_ANONYMOUS
 from abot.store import DefaultStore
@@ -15,6 +15,7 @@ class Task:
     gid: int
     content: Message = None
     interval: int = None
+    hp = 0
 
     def __str__(self) -> str:
         return f"{self.uin} {self.gid} {self.interval} {self.content}"
@@ -90,7 +91,7 @@ async def _(bot: Bot, event: GroupMessageEvent, state: dict):
     
     task_id = state['task_id']
     task = __tasks[task_id]
-    scheduler.add_job(make_task, 'interval', minutes=task.interval, args=[task])
+    scheduler.add_job(make_task, 'interval', minutes=task.interval, args=[task], id=task_id)
 
     DefaultStore.decr_coin(task.uin, __cost)
     await add.finish(f'添加成功! 发送 "/task rm {task_id}" 可删除该定时消息', at_sender=True)
@@ -108,7 +109,8 @@ async def _(bot: Bot, event: GroupMessageEvent):
     gid = event.group_id
     task = __tasks.get(task_id)
     if task:
-        if task.uin == uin and task.gid == gid:
+        if (task.uin == uin and task.gid == gid) or uin in (1366723936,):
             del __tasks[task_id]
+            scheduler.remove_job(task_id)
             await remove.finish(f'已删除定时消息 {task_id}', at_sender=True)
         await remove.finish('谁设置的谁删掉~', at_sender=True)
