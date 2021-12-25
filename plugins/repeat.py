@@ -32,7 +32,7 @@ class Channel:
             return False
 
         if not compare_messages(self.last, s[n-1]):
-            self.cd = 0
+            self.cd = 1
 
         if self.cd > 0:
             self.cd -= 1
@@ -74,7 +74,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         await repeat.finish(msg)
 
 __plugin_name__ = 'repeat'
-__plugin_usage__ = '''
+__plugin_usage__ = '''【复读模式】
 /开始复读
 /停止复读'''
 

@@ -60,9 +60,7 @@ class Channel:
 
 shui = on_message(permission=GROUP, block=False, priority=2)
 
-channels: Dict[int, Channel] = {
-    826653699: Channel(1366723936)
-}
+channels: Dict[int, Channel] = {}
 
 @shui.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
@@ -76,7 +74,7 @@ async def _(bot: Bot, event: GroupMessageEvent):
         await shui.finish(await get_next_message(msg))
 
 __plugin_name__ = 'shui'
-__plugin_usage__ = '''
+__plugin_usage__ = '''【水群模式】
 /开始水群
 /停止水群'''
 

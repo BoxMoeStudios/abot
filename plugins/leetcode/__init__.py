@@ -38,10 +38,10 @@ async def _(bot: Bot, event: GroupMessageEvent):
 
 scheduler = require('nonebot_plugin_apscheduler').scheduler
 
+@scheduler.scheduled_job('cron', hour=0, minute=5)
 @scheduler.scheduled_job('cron', hour=17, minute=0)
 @scheduler.scheduled_job('cron', hour=8, minute=0)
 async def _():
-    print('xxx')
     bot: CQHTTPBot = get_bot()
 
     try:
