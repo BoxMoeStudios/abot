@@ -19,7 +19,9 @@ class Channel:
         self.queue[mid] = msg
         if len(self.queue) > self.n:
             # persistent
-            self.queue.clear()
+            pass
+            
+            # self.queue.clear()
 
     async def add_recall_id(self, mid: int):
         self.recall_list.append(mid)

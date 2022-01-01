@@ -36,6 +36,7 @@ class Channel:
 
         if self.cd > 0:
             self.cd -= 1
+            self.last = s[n-1]
             return False
 
         
@@ -48,7 +49,6 @@ class Channel:
         self.cd = randint(5, 15)
         self.lock.release()
 
-        self.last = s.pop()
         return True
 
     def clear(self):
