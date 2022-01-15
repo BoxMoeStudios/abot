@@ -1,7 +1,7 @@
 from nonebot import on_command, export, require, get_bot
 from nonebot.log import logger
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import GroupMessageEvent, MessageSegment, Message, Bot as CQHTTPBot, message
+from nonebot.adapters.cqhttp import GroupMessageEvent, MessageSegment, Message, Bot as CQHTTPBot
 from abot.setup import export_plugin
 from .leetcode import Cache
 
@@ -38,8 +38,8 @@ async def _(bot: Bot, event: GroupMessageEvent):
 
 scheduler = require('nonebot_plugin_apscheduler').scheduler
 
-@scheduler.scheduled_job('cron', hour=0, minute=5)
-@scheduler.scheduled_job('cron', hour=17, minute=0)
+@scheduler.scheduled_job('cron', hour=12, minute=0)
+@scheduler.scheduled_job('cron', hour=18, minute=0)
 @scheduler.scheduled_job('cron', hour=8, minute=0)
 async def _():
     bot: CQHTTPBot = get_bot()
@@ -61,4 +61,30 @@ async def _():
             continue
         await bot.send_msg(message_type='group', group_id=gid, message=msg)
 
-    
+
+__we_groups = [826653699]
+
+
+@scheduler.scheduled_job('cron', hour=13, minute=30)
+@scheduler.scheduled_job('cron', hour=8, minute=0)
+async def _():
+    bot: CQHTTPBot = get_bot()
+
+    msg = Message()
+    msg.append(MessageSegment.text('We 重邮打卡啦乖乖们 '))
+    msg.append(MessageSegment.face(305))
+
+    for gid in __we_groups:
+        await bot.send_group_msg(group_id=gid, message=msg)
+
+
+@scheduler.scheduled_job('cron', hour=16, minute=50)
+async def _():
+    bot: CQHTTPBot = get_bot()
+
+    msg = Message()
+    msg.append(MessageSegment.text('让我看看是哪个乖乖还没有 We 重邮打卡 '))
+    msg.append(MessageSegment.face(289))
+
+    for gid in __we_groups:
+        await bot.send_group_msg(group_id=gid, message=msg)
